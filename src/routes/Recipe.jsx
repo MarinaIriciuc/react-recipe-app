@@ -4,8 +4,9 @@ import Layout from "../layout/Layout.jsx";
 import {useEffect, useState} from "react";
 import Skeleton from "react-loading-skeleton";
 import {FaHeart, FaRegHeart} from "react-icons/fa";
-import {ToastContainer, toast} from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useNotify from "../hooks/useNotify.js";
 
 export default function Recipe() {
 
@@ -21,6 +22,7 @@ export default function Recipe() {
 
     return recipes.some(recipe => params.slug === recipe)
   });
+  const { notify } = useNotify();
 
   useEffect(() => {
     document.title = data?.label || "Recipe"
@@ -65,9 +67,11 @@ export default function Recipe() {
 
   function handleAddToFavorites(toggle) {
     if (toggle) {
-      toast.success('The Recipe Has Been Added To Favorites!', {});
+      // toast.success('The Recipe Has Been Added To Favorites!', {});
+      notify('success', 'The Recipe Has Been Added To Favorites!');
     } else {
-      toast.info('The Recipe Has Been Removed From Favorites!', {});
+      notify('info', 'The Recipe Has Been Removed From Favorites!');
+      // toast.info('The Recipe Has Been Removed From Favorites!', {});
     }
     setFavorite(toggle)
   }
